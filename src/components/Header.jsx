@@ -1,17 +1,19 @@
 import './Header.css';
-import {NavLink} from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+
 import CartIcon from '../assets/images/icons/cart-icon.png';
 import SearchIcon from '../assets/images/icons/search-icon.png';
 import LogoWhite from '../assets/images/logo-white.png';
 import MobileLogoWhite from '../assets/images/mobile-logo-white.png';
-export function Header({cart, onSearchChange}){
+
+export function Header({ cart, onSearchChange }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   let totalQuantity = 0;
 
-  cart.forEach((cartItem) =>{
-    totalQuantity +=cartItem.quantity;
+  cart.forEach((item) => {
+    totalQuantity += item.quantity;
   });
 
   const handleSearchChange = (e) => {
@@ -25,45 +27,46 @@ export function Header({cart, onSearchChange}){
     onSearchChange("");
   };
 
-    return (
-        <div className="header">
-        <div className="left-section">
-          <NavLink to="/" className="header-link">
-            <img className="logo-white" src={LogoWhite} />
-            
-            <img className="mobile-logo" src= {MobileLogoWhite}/>
-          </NavLink>
-        </div>
-
-        <div className="middle-section">  
-          <input 
-            className="search-bar" 
-            type="text" 
-            placeholder="Search" 
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-          {searchQuery && (
-            <button className="clear-search-btn" onClick={handleClearSearch}>
-              ×
-            </button>
-          )}
-          <button className="search-button">
-            <img className="search-icon" src={SearchIcon} />
-          </button>
-        </div>
-
-        <div className="right-section">
-          <NavLink className="orders-link header-link" to="/orders">
-            <span className="orders-text">Orders</span>
-          </NavLink>
-
-          <NavLink className="cart-link header-link" to="/checkout">
-            <img className="cart-icon" src={CartIcon} />
-            <div className="cart-quantity">{totalQuantity}</div>
-            <div className="cart-text">Cart</div>
-          </NavLink>
-        </div>
+  return (
+    <div className="header">
+      <div className="left-section">
+        <NavLink to="/" className="header-link">
+          <img className="logo-white" src={LogoWhite} />
+          <img className="mobile-logo" src={MobileLogoWhite} />
+        </NavLink>
       </div>
-    );
+
+      <div className="middle-section">
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Search"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+
+        {searchQuery && (
+          <button className="clear-search-btn" onClick={handleClearSearch}>
+            ×
+          </button>
+        )}
+
+        <button className="search-button">
+          <img className="search-icon" src={SearchIcon} />
+        </button>
+      </div>
+
+      <div className="right-section">
+        <NavLink className="orders-link header-link" to="/orders">
+          <span className="orders-text">Orders</span>
+        </NavLink>
+
+        <NavLink className="cart-link header-link" to="/checkout">
+          <img className="cart-icon" src={CartIcon} />
+          <div className="cart-quantity">{totalQuantity}</div>
+          <div className="cart-text">Cart</div>
+        </NavLink>
+      </div>
+    </div>
+  );
 }
